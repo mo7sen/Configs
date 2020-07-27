@@ -7,4 +7,4 @@ I created this repository so that I do not need to rewrite my configs from scrat
 The configs I have so far in this repository are:
 
 - editor
-	- nvim
+	- [nvim](editor/nvim)

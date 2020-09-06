@@ -1,6 +1,6 @@
 " Variables
 let lengthColumn=80 " Highlight a column as an indicator for max line length
-
+let tabsize=2
 
 " Plugs
 call plug#begin('~/.config/nvim/plugs')
@@ -13,6 +13,7 @@ call plug#begin('~/.config/nvim/plugs')
 
   " Yet another powerline
   Plug 'itchyny/lightline.vim'
+  Plug 'mengelbrecht/lightline-bufferline'
 
   " Let's hope I don't go back to NERDTree
   Plug 'tpope/vim-vinegar'
@@ -37,12 +38,38 @@ call plug#begin('~/.config/nvim/plugs')
 
 call plug#end()
 
+filetype plugin indent on
+
 " Appearance
   " Editor (isn't the entire thing just an editor?)
   set nowrap
   set nu rnu
   set cursorline
   let &colorcolumn=lengthColumn
+  set sidescrolloff=5 " The number of screen columns to keep to right and left of cursor
+  set scrolloff=5 " The number of screen lines to keep above and below the cursor
+  set list
+  set lcs+=space:.
+  set expandtab
+  let &tabstop=tabsize
+  let &softtabstop=tabsize
+  let &shiftwidth=tabsize
+  set shiftround " Round (when shifting lines) to nearest multiple of shiftsize
+  set autowrite " Save when switching buffers
+  set mouse=a " enable mousemode for the lulz
+  set title " set title of terminal to file being edited
+  set showtabline=2
+
+  " N.B: Vim doesn't check periodically, so an external command needs to be
+  " executed for it to check
+  set autoread " Reread files when edited externally
+  " The external command:
+  au FocusGained,BufEnter * :silent! !
+  " Paired with autosave (noautocmd to prevent other hooks from running)
+  au FocusLost,WinLeave * :silent! noautocmd w
+
+
+  set lazyredraw " Don't redraw when executing macros/scripts
 
   " Colorscheme Settings
   set termguicolors     " enable true colors support (needed by ayu)
@@ -51,16 +78,29 @@ call plug#end()
 
   " Powerline Settings
   set noshowmode
-  let g:lightline = {
-  \ 'colorscheme': 'ayu_dark',
-  \ }
+  let g:lightline = {}
+  let g:lightline.colorscheme = 'ayu_dark'
+  let g:lightline.tabline = { 'left': [['buffers']], 'right': [['close']] }
+  let g:lightline.enable = {
+        \ 'tabline': 1,
+        \ }
+  let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
+  let g:lightline.component_type = {'buffers': 'tabsel'}
+  autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
 
 " Accessibility
 let mapleader = " "
 
   " For Insert Mode
   imap jk <Esc>
-  
+
+  inoremap (; <CR>(<CR>);<C-c>O
+  inoremap (, <CR>(<CR>)<C-c>O
+  inoremap {; <CR>{<CR>};<C-c>O
+  inoremap {, <CR>{<CR>}<C-c>O
+  inoremap [; <CR>[<CR>];<C-c>O
+  inoremap [, <CR>[<CR>]<C-c>O
+
   " For Terminal Mode
   tnoremap jk  <C-\><C-n> 
   tnoremap <Esc> <C-\><C-n>
@@ -68,7 +108,7 @@ let mapleader = " "
   tnoremap <C-j> <C-\><C-n><C-w>j
   tnoremap <C-k> <C-\><C-n><C-w>k
   tnoremap <C-l> <C-\><C-n><C-w>l
-  
+
   " For Normal Mode
   nnoremap ; :
   nnoremap ,/ :noh<CR>
@@ -87,14 +127,19 @@ let mapleader = " "
     nnoremap <M-k> :bp<CR>
 
 " Functions (I guess)
-nnoremap <M-t> :split<CR>
-		\<C-w>j 
-		\:resize 10<CR>
-		\:term<CR>
-		\a
+nnoremap <C-t> :split<CR>
+    \<C-w>j 
+    \:res 10<CR>
+    \:term<CR>
+    \a
+
+nnoremap <M-t> <C-w>j 
+    \:res 10<CR>
+    \a
 
 tnoremap <M-t> <C-\><C-n>
-		\:q<CR>
+    \:res 0<CR>
+    \<C-w>k
 
 " Plugin Settings
     " Livedown Preview

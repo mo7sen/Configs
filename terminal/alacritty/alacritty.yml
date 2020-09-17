@@ -1,0 +1,99 @@
+startup_mode: Maximized
+
+font:
+        size: 9.0
+        normal:
+                family: mononoki
+                style: Regular
+        bold:
+                family: mononoki
+        italic:
+                family: mononoki
+
+ayu_dark: !include colorschemes/ayu_dark.yml
+                
+# ColorShemes
+schemes:
+        # Ayu Dark
+        ayu_dark: &ayu_dark
+                # Default colors
+                primary:
+                        background: '#0A0E14'
+                        foreground: '#B3B1AD'
+                # Normal colors
+                normal:
+                        black: '#01060E'
+                        red: '#EA6C73'
+                        green: '#91B362'
+                        yellow: '#F9AF4F'
+                        blue: '#53BDFA'
+                        magenta: '#FAE994'
+                        cyan: '#90E1C6'
+                        white: '#C7C7C7'
+
+                # Bright colors
+                bright:
+                        black: '#686868'
+                        red: '#F07178'
+                        green: '#C2D94C'
+                        yellow: '#FFB454'
+                        blue: '#59C2FF'
+                        magenta: '#FFEE99'
+                        cyan: '#95E6CB'
+                        white: '#FFFFFF'
+        # Blood Moon
+        blood_moon: &blood_moon
+                primary:
+                        background: '#10100E'
+                        foreground: '#C6C6C4'
+
+                # Normal colors
+                normal:
+                        black:   '#10100E'
+                        red:     '#C40233'
+                        green:   '#009F6B'
+                        yellow:  '#FFD700'
+                        blue:    '#0087BD'
+                        magenta: '#9A4EAE'
+                        cyan:    '#20B2AA'
+                        white:   '#C6C6C4'
+
+                # Bright colors
+                bright:
+                        black:   '#696969'
+                        red:     '#FF2400'
+                        green:   '#03C03C'
+                        yellow:  '#FDFF00'
+                        blue:    '#007FFF'
+                        magenta: '#FF1493'
+                        cyan:    '#00CCCC'
+                        white:   '#FFFAFA'
+        # Dracula
+        dracula: &dracula
+                primary:
+                        background: '#282a36'
+                        foreground: '#f8f8f2'
+
+                # Normal colors
+                normal:
+                        black:   '#000000'
+                        red:     '#ff5555'
+                        green:   '#50fa7b'
+                        yellow:  '#f1fa8c'
+                        blue:    '#caa9fa'
+                        magenta: '#ff79c6'
+                        cyan:    '#8be9fd'
+                        white:   '#bfbfbf'
+
+                # Bright colors
+                bright:
+                        black:   '#575b70'
+                        red:     '#ff6e67'
+                        green:   '#5af78e'
+                        yellow:  '#f4f99d'
+                        blue:    '#caa9fa'
+                        magenta: '#ff92d0'
+                        cyan:    '#9aedfe'
+                        white:   '#e6e6e6'
+
+colors: *ayu_dark

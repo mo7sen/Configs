@@ -8,3 +8,7 @@ The configs I have so far in this repository are:
 
 - editor
 	- [nvim](editor/nvim)
+- terminal
+  - [alacritty](terminal/alacritty)
+- pane
+  - [tmux](pane/tmux)

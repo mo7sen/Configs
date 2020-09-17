@@ -1,5 +1,7 @@
 # ...Still under construction
 
+# `neovim` Configuration Description
+
 ### Plugin Manager Used:
 `junegunn/vim-plug`: I just like how easy it is to just add new plugins (and even set custom option for each one).
 

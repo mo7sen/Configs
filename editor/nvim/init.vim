@@ -1,5 +1,7 @@
 " Variables
 let lengthColumn=80 " Highlight a column as an indicator for max line length
+let autoWrapColumn=80 " If autowrap is set, wrap at this column
+let rowNumWidth = 8 " Width of the line-number column
 let tabsize=2
 
 " Plugs
@@ -32,6 +34,7 @@ call plug#begin('~/.config/nvim/plugs')
   " Highlight Yanks (Never hurts to have a visual feedback
   Plug 'machakann/vim-highlightedyank'
 
+  " This plugin is unstable and randomly crashes. Find a better alternative
   " Show me de md
   Plug 'shime/vim-livedown' " `npm install -g livedown` needed
 
@@ -44,6 +47,7 @@ filetype plugin indent on
   " Editor (isn't the entire thing just an editor?)
   set nowrap
   set nu rnu
+  let &numberwidth=rowNumWidth
   set cursorline
   let &colorcolumn=lengthColumn
   set sidescrolloff=5 " The number of screen columns to keep to right and left of cursor
@@ -59,6 +63,9 @@ filetype plugin indent on
   set mouse=a " enable mousemode for the lulz
   set title " set title of terminal to file being edited
   set showtabline=2
+
+  autocmd FileType text let &tw=autoWrapColumn
+  autocmd FileType vim let &tw=autoWrapColumn
 
   " N.B: Vim doesn't check periodically, so an external command needs to be
   " executed for it to check

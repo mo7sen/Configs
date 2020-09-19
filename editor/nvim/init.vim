@@ -130,8 +130,9 @@ let mapleader = " "
     nnoremap <M-h> :split<CR>
 
     " Buffer Switching
-    nnoremap <M-j> :bn<CR>
-    nnoremap <M-k> :bp<CR>
+    nnoremap <leader>j :bn<CR>
+    nnoremap <leader>k :bp<CR>
+    nnoremap <leader>d :bd<CR>
 
 " Functions (I guess)
 nnoremap <C-t> :split<CR>

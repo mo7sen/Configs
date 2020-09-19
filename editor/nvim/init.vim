@@ -36,7 +36,7 @@ call plug#begin('~/.config/nvim/plugs')
 
   " This plugin is unstable and randomly crashes. Find a better alternative
   " Show me de md
-  Plug 'shime/vim-livedown' " `npm install -g livedown` needed
+  " Plug 'shime/vim-livedown' " `npm install -g livedown` needed
 
 
 call plug#end()

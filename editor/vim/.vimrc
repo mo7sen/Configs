@@ -4,8 +4,16 @@ let autoWrapColumn=80 " If autowrap is set, wrap at this column
 let rowNumWidth = 8 " Width of the line-number column
 let tabsize=2
 
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+
 " Plugs
-call plug#begin('~/.config/nvim/plugs')
+call plug#begin('~/.vim/plugs')
 
   " Support for tens of filetypes
   Plug 'sheerun/vim-polyglot'
@@ -31,7 +39,7 @@ call plug#begin('~/.config/nvim/plugs')
   Plug 'tpope/vim-obsession'
 
   " Autocompletion bruddah
-  Plug 'ycm-core/YouCompleteMe'
+  Plug 'ycm-core/YouCompleteMe', {'do': './install.py --clangd-completer'}
 
   " Highlight Yanks (Never hurts to have a visual feedback
   Plug 'machakann/vim-highlightedyank'
@@ -105,7 +113,7 @@ filetype plugin indent on
   set termguicolors     " enable true colors support (needed by ayu)
   let ayucolor="dark"   " Dark version of ayu
   colorscheme ayu    " Setting colorscheme
-  hi Normal guibg=NONE ctermbg=NONE
+  " hi Normal guibg=NONE ctermbg=NONE
 
   " Powerline Settings
   set noshowmode
@@ -195,15 +203,21 @@ tnoremap <M-t> <C-\><C-n>
   " {
     " ycm
     let g:ycm_always_populate_location_list=1
-    let g:ycm_semantic_triggers = {'c':['re!.']}
+    " let g:ycm_semantic_triggers = {'c':['re!.']}
+
+    set updatetime=200
 
     let g:ycm_use_clangd=1
     let g:ycm_auto_trigger=1
+
+    let g:ycm_auto_hover='CursorHold'
 
     let g:ycm_collect_identifiers_from_tags_files = 1
     let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
     let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
     let g:ycm_use_ultisnips_completer=1
+
+    let g:ycm_max_num_candidates=7
 
     "supertab
     let g:SuperTabDefaultCompletionType = '<C-n>'

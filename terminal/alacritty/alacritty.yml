@@ -10,7 +10,11 @@ font:
         italic:
                 family: mononoki
 
-ayu_dark: !include colorschemes/ayu_dark.yml
+# Window:
+#   padding:
+#     x: 2
+#     y: 2
+
                 
 # ColorShemes
 schemes:
@@ -97,3 +101,12 @@ schemes:
                         white:   '#e6e6e6'
 
 colors: *ayu_dark
+
+window:
+  padding:
+    x: 10
+    y: 10
+    dyanmic_padding: true
+  decorations: none
+
+  startup_mode: Fullscreen

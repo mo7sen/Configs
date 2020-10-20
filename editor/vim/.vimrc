@@ -59,6 +59,8 @@ call plug#begin('~/.vim/plugs')
 
   Plug 'preservim/tagbar'
 
+  Plug 'ctrlpvim/ctrlp.vim'
+
   Plug 'junegunn/fzf', { 'do': {->fzf#install()}}
   Plug 'junegunn/fzf.vim'
 
@@ -230,6 +232,9 @@ tnoremap <M-t> <C-\><C-n>
 
     let g:ycm_autoclose_preview_window_after_insertion=1
   " }
+  "
+  " " CtrlP
+    set wildignore+=*/build/*
 
 nmap <Left> <<
 nmap <Right> >>

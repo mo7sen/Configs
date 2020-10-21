@@ -221,6 +221,8 @@ tnoremap <M-t> <C-\><C-n>
 
     let g:ycm_max_num_candidates=7
 
+    nmap <C-i> :YcmCompleter FixIt<CR>
+
     "supertab
     let g:SuperTabDefaultCompletionType = '<C-n>'
 

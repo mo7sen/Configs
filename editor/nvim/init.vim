@@ -9,7 +9,9 @@ call plug#begin('~/.config/nvim/plugs')
 
   " Support for tens of filetypes
   Plug 'sheerun/vim-polyglot'
-  Plug 'arakashic/chromatica.nvim'
+
+  " Cooler wild menu
+  Plug 'gelguy/wilder.nvim'
 
   " Ayu Colorscheme
   Plug 'ayu-theme/ayu-vim'
@@ -29,9 +31,6 @@ call plug#begin('~/.config/nvim/plugs')
 
   " Auto mksession
   Plug 'tpope/vim-obsession'
-
-  " Autocompletion bruddah
-  Plug 'ycm-core/YouCompleteMe'
 
   " Highlight Yanks (Never hurts to have a visual feedback
   Plug 'machakann/vim-highlightedyank'
@@ -60,6 +59,14 @@ call plug#begin('~/.config/nvim/plugs')
 
   Plug 'SirVer/ultisnips'
 
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'jackguo380/vim-lsp-cxx-highlight'
+
+  Plug 'voldikss/vim-floaterm'
+
+  Plug 'junegunn/goyo.vim'
+  Plug 'junegunn/limelight.vim'
+
 call plug#end()
 
 filetype plugin indent on
@@ -75,8 +82,8 @@ filetype plugin indent on
   set scrolloff=5 " The number of screen lines to keep above and below the cursor
   set list
   set lcs+=space:.
-  set expandtab
-  let &tabstop=tabsize
+  set expandtab " Insert spaces instead of tabs
+  let &tabstop=tabsize " Tab width
   let &softtabstop=tabsize
   let &shiftwidth=tabsize
   set shiftround " Round (when shifting lines) to nearest multiple of shiftsize
@@ -107,7 +114,7 @@ filetype plugin indent on
   colorscheme ayu    " Setting colorscheme
   hi Normal guibg=NONE ctermbg=NONE
 
-  " Powerline Settings
+  " Lightline Settings
   set noshowmode
   let g:lightline = {}
   let g:lightline.colorscheme = 'ayu_dark'
@@ -193,28 +200,36 @@ tnoremap <M-t> <C-\><C-n>
     
   " Completion
   " {
-    " ycm
-    let g:ycm_always_populate_location_list=1
-    let g:ycm_semantic_triggers = {'c':['re!.']}
+    " COC
+    set updatetime=300
+    set cmdheight=1
 
-    let g:ycm_use_clangd=1
-    let g:ycm_auto_trigger=1
+    set signcolumn=number
 
-    let g:ycm_collect_identifiers_from_tags_files = 1
-    let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-    let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-    let g:ycm_use_ultisnips_completer=1
+    inoremap <silent><expr> <c-space> coc#refresh()
+
+    nmap <silent> gd <Plug>(coc-definition)
+    nmap <silent> gy <Plug>(coc-type-definition)
+    nmap <silent> gi <Plug>(coc-implementation)
+    nmap <silent> gr <Plug>(coc-references)
+
+    nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+
+    nmap <leader>rn <Plug>(coc-rename)
+    nmap <leader>f  <Plug>(coc-format-selected)
 
     "supertab
-    let g:SuperTabDefaultCompletionType = '<C-n>'
+    " let g:SuperTabDefaultCompletionType = '<C-n>'
 
     ""UltiSnips
-    let g:UltiSnipsExpandTrigger = "<tab>"
-    let g:UltiSnipsJumpForwardTrigger = "<tab>"
-    let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+    " let g:UltiSnipsExpandTrigger = "<tab>"
+    " let g:UltiSnipsJumpForwardTrigger = "<tab>"
+    " let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 
-    let g:ycm_autoclose_preview_window_after_insertion=1
+    " let g:ycm_autoclose_preview_window_after_insertion=1
   " }
 
 nmap <Left> <<
@@ -226,3 +241,48 @@ vmap <Left> <gv
 vmap <Right> >gv
 vmap <Up> [egv
 vmap <Down> ]egv
+
+" Wilder Nvim Settings
+call wilder#enable_cmdline_enter()
+set wildcharm=<Tab>
+cmap <Expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
+cmap <Expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
+
+call wilder#set_option('modes', ['/', '?', ':'])
+
+" Limelight Settings
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+" Color name (:help cterm-colors) or ANSI code
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240
+
+let g:limelight_conceal_guifg = 'DarkGray'
+let g:limelight_conceal_guifg = '#777777'
+
+" Default: 0.5
+let g:limelight_default_coefficient = 0.5
+
+" Number of preceding/following paragraphs to include (default: 0)
+let g:limelight_paragraph_span = 0
+
+" Beginning/end of paragraph
+"   When there's no empty line between the paragraphs
+"   and each paragraph starts with indentation
+" let g:limelight_bop = '^\s'
+" let g:limelight_eop = '\ze\n^\s'
+
+" Highlighting priority (default: 10)
+"   Set it to -1 not to overrule hlsearch
+" let g:limelight_priority = -1
+
+" Goyo Settings
+autocmd! User GoyoLeave :wq
+
+autocmd FileType markdown set wrap
+autocmd FileType markdown set linebreak
+autocmd FileType markdown set breakindent
+autocmd FileType markdown set nolist
+autocmd FileType markdown let &textwidth=lengthColumn
+autocmd FileType markdown set spell spelllang=en_us

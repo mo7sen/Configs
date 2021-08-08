@@ -1,0 +1,1 @@
+autocmd! User GoyoLeave :wq

@@ -1,288 +1,45 @@
-" Variables
-let lengthColumn=80 " Highlight a column as an indicator for max line length
-let autoWrapColumn=80 " If autowrap is set, wrap at this column
-let rowNumWidth = 8 " Width of the line-number column
-let tabsize=2
+execute 'source' '~/.config/nvim/configs/variables.vim'
 
-" Plugs
 call plug#begin('~/.config/nvim/plugs')
+  for p in glob('~/.config/nvim/configs/plugs/**/*.vim', 0, 1)
+    let split_path = split(p, '/')
+    let repo = join([split_path[-2],split_path[-1][:-5]],'/')
 
-  " Support for tens of filetypes
-  Plug 'sheerun/vim-polyglot'
+    let plug_settings = {}
 
-  " Cooler wild menu
-  Plug 'gelguy/wilder.nvim'
+    let metafile = join([p[:-5], '.meta'], '')
+    if filereadable(expand(metafile))
+      execute 'source' metafile
 
-  " Ayu Colorscheme
-  Plug 'ayu-theme/ayu-vim'
+      if exists("PlugBranch")
+        let plug_settings.branch=PlugBranch
+        unlet PlugBranch
+      endif
 
-  " Yet another powerline
-  Plug 'itchyny/lightline.vim'
-  Plug 'mengelbrecht/lightline-bufferline'
+      if exists("PlugPostFunc")
+        let plug_settings.do=PlugPostFunc
+        unlet PlugPostFunc
+      endif
 
-  " Let's hope I don't go back to NERDTree
-  Plug 'tpope/vim-vinegar'
+    endif
 
-  Plug 'tpope/vim-surround'         " Surround stuff in a flash
-  Plug 'tpope/vim-commentary'       " Comment stuff in another flash
-  Plug 'tpope/vim-unimpaired'
-  Plug 'tommcdo/vim-lion'           " Align stuff in yet another flash
-  Plug 'easymotion/vim-easymotion'  " My name is Barry Allen
+    execute 'Plug' string(repo) ',' string(plug_settings)
 
-  " Auto mksession
-  Plug 'tpope/vim-obsession'
-
-  " Highlight Yanks (Never hurts to have a visual feedback
-  Plug 'machakann/vim-highlightedyank'
-
-  " This plugin is unstable and randomly crashes. Find a better alternative
-  " Show me de md
-  " Plug 'shime/vim-livedown' " `npm install -g livedown` needed
-  Plug 'tpope/vim-fugitive'
-
-  " if has('nvim')
-  "   Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
-  " else
-  "   Plug 'Shougo/defx.nvim'
-  "   Plug 'roxma/nvim-yarp'
-  "   Plug 'roxma/vim-hug-neovim-rpc'
-  " endif
-
-  Plug 'preservim/tagbar'
-
-  Plug 'junegunn/fzf', { 'do': {->fzf#install()}}
-  Plug 'junegunn/fzf.vim'
-
-  Plug 'Valloric/ListToggle'
-
-  Plug 'ervandew/supertab'
-
-  Plug 'SirVer/ultisnips'
-
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'jackguo380/vim-lsp-cxx-highlight'
-
-  Plug 'voldikss/vim-floaterm'
-
-  Plug 'junegunn/goyo.vim'
-  Plug 'junegunn/limelight.vim'
-
+  endfor
 call plug#end()
 
-filetype plugin indent on
+for f in glob('~/.config/nvim/configs/plugs/**/*.vim', 0, 1)
+  execute 'source' f
+endfor
 
-" Appearance
-  " Editor (isn't the entire thing just an editor?)
-  set nowrap
-  set nu rnu
-  let &numberwidth=rowNumWidth
-  set cursorline
-  let &colorcolumn=lengthColumn
-  set sidescrolloff=5 " The number of screen columns to keep to right and left of cursor
-  set scrolloff=5 " The number of screen lines to keep above and below the cursor
-  set list
-  set lcs+=space:.
-  set expandtab " Insert spaces instead of tabs
-  let &tabstop=tabsize " Tab width
-  let &softtabstop=tabsize
-  let &shiftwidth=tabsize
-  set shiftround " Round (when shifting lines) to nearest multiple of shiftsize
-  set autowrite " Save when switching buffers
-  set mouse=a " enable mousemode for the lulz
-  set title " set title of terminal to file being edited
-  set showtabline=2
+for f in glob('~/.config/nvim/configs/*.vim', 0, 1)
+  execute 'source' f
+endfor
 
-  autocmd FileType text let &tw=autoWrapColumn
-  autocmd FileType vim let &tw=autoWrapColumn
-
-  " WHILE USEFUL, THIS MAKES BUFFER SWITCHING EXTREMELY SLOW IF DONE FREQUENTLY
-  "
-  " " N.B: Vim doesn't check periodically, so an external command needs to be
-  " " executed for it to check
-  " set autoread " Reread files when edited externally
-  " " The external command:
-  " au FocusGained,BufEnter * :silent! !
-  " " Paired with autosave (noautocmd to prevent other hooks from running)
-  " au FocusLost,WinLeave * :silent! noautocmd w
-
-
-  set lazyredraw " Don't redraw when executing macros/scripts
-
-  " Colorscheme Settings
-  set termguicolors     " enable true colors support (needed by ayu)
-  let ayucolor="dark"   " Dark version of ayu
-  colorscheme ayu    " Setting colorscheme
-  hi Normal guibg=NONE ctermbg=NONE
-
-  " Lightline Settings
-  set noshowmode
-  let g:lightline = {}
-  let g:lightline.colorscheme = 'ayu_dark'
-  let g:lightline.tabline = { 'left': [['buffers']], 'right': [['close']] }
-  let g:lightline.enable = {
-        \ 'tabline': 1,
-        \ }
-  let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
-  let g:lightline.component_type = {'buffers': 'tabsel'}
-  autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
-
-" Accessibility
-let mapleader = " "
-
-  " For Insert Mode
-  imap jk <Esc>
-
-  inoremap (; <CR>(<CR>);<C-c>O
-  inoremap (, <CR>(<CR>)<C-c>O
-  inoremap {; <CR>{<CR>};<C-c>O
-  inoremap {, <CR>{<CR>}<C-c>O
-  inoremap [; <CR>[<CR>];<C-c>O
-  inoremap [, <CR>[<CR>]<C-c>O
-
-  " For Terminal Mode
-  tnoremap jk  <C-\><C-n> 
-  tnoremap <Esc> <C-\><C-n>
-  tnoremap <C-h> <C-\><C-n><C-w>h
-  tnoremap <C-j> <C-\><C-n><C-w>j
-  tnoremap <C-k> <C-\><C-n><C-w>k
-  tnoremap <C-l> <C-\><C-n><C-w>l
-
-  " For Normal Mode
-  nnoremap ; :
-  nnoremap ,/ :noh<CR>
-    " Pane Movement
-    nnoremap <C-h> <C-w>h
-    nnoremap <C-j> <C-w>j
-    nnoremap <C-k> <C-w>k
-    nnoremap <C-l> <C-w>l
-
-    " Splits
-    nnoremap <M-v> :vsplit<CR>
-    nnoremap <M-h> :split<CR>
-
-    " Buffer Switching
-    nnoremap <leader>j :bn<CR>
-    nnoremap <leader>k :bp<CR>
-    nnoremap <leader>; :bd<CR>
-
-" Functions (I guess)
-nnoremap <C-t> :split<CR>
-    \<C-w>j 
-    \:res 10<CR>
-    \:term<CR>
-    \a
-
-nnoremap <M-t> <C-w>j 
-    \:res 10<CR>
-    \a
-
-tnoremap <M-t> <C-\><C-n>
-    \:res 0<CR>
-    \<C-w>k
-
-" Plugin Settings
-    " vim-markdown-preview
-    let g:vim_markdown_preview_github=1
-
-    " tagbar
-    nmap <F9> :TagbarToggle<CR>
-
-    " " defx
-    " nnoremap <silent><buffer><expr> <CR>
-    " \ defx#is_directory() ?
-    " \ defx#do_action('open_tree', 'recursive:10') :
-    " \ defx#do_action('preview')
-
-	  " nnoremap <silent><buffer><expr> o
-	  " \ defx#do_action('open_tree', 'toggle')
-
-    " nnoremap <F8> :Defx -split=vertical -winwidth=50 -direction=topleft<CR>
-    
-  " Completion
-  " {
-    " COC
-    set updatetime=300
-    set cmdheight=1
-
-    set signcolumn=number
-
-    inoremap <silent><expr> <c-space> coc#refresh()
-
-    nmap <silent> gd <Plug>(coc-definition)
-    nmap <silent> gy <Plug>(coc-type-definition)
-    nmap <silent> gi <Plug>(coc-implementation)
-    nmap <silent> gr <Plug>(coc-references)
-
-    nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-    autocmd CursorHold * silent call CocActionAsync('highlight')
-
-    nmap <leader>rn <Plug>(coc-rename)
-    nmap <leader>f  <Plug>(coc-format-selected)
-
-    "supertab
-    " let g:SuperTabDefaultCompletionType = '<C-n>'
-
-    ""UltiSnips
-    " let g:UltiSnipsExpandTrigger = "<tab>"
-    " let g:UltiSnipsJumpForwardTrigger = "<tab>"
-    " let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
-
-    " let g:ycm_autoclose_preview_window_after_insertion=1
-  " }
-
-nmap <Left> <<
-nmap <Right> >>
-nmap <Up> [e
-nmap <Down> ]e
-
-vmap <Left> <gv
-vmap <Right> >gv
-vmap <Up> [egv
-vmap <Down> ]egv
-
-" Wilder Nvim Settings
-call wilder#enable_cmdline_enter()
-set wildcharm=<Tab>
-cmap <Expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
-cmap <Expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
-
-call wilder#set_option('modes', ['/', '?', ':'])
-
-" Limelight Settings
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
-
-" Color name (:help cterm-colors) or ANSI code
-let g:limelight_conceal_ctermfg = 'gray'
-let g:limelight_conceal_ctermfg = 240
-
-let g:limelight_conceal_guifg = 'DarkGray'
-let g:limelight_conceal_guifg = '#777777'
-
-" Default: 0.5
-let g:limelight_default_coefficient = 0.5
-
-" Number of preceding/following paragraphs to include (default: 0)
-let g:limelight_paragraph_span = 0
-
-" Beginning/end of paragraph
-"   When there's no empty line between the paragraphs
-"   and each paragraph starts with indentation
-" let g:limelight_bop = '^\s'
-" let g:limelight_eop = '\ze\n^\s'
-
-" Highlighting priority (default: 10)
-"   Set it to -1 not to overrule hlsearch
-" let g:limelight_priority = -1
-
-" Goyo Settings
-autocmd! User GoyoLeave :wq
-
-autocmd FileType markdown set wrap
-autocmd FileType markdown set linebreak
-autocmd FileType markdown set breakindent
-autocmd FileType markdown set nolist
-autocmd FileType markdown let &textwidth=lengthColumn
-autocmd FileType markdown set spell spelllang=en_us
+function FileTypeHandle()
+  let ft_path = join(['~/.config/nvim/configs/filetypes/',&ft,'.vim'], '')
+  if filereadable(expand(ft_path))
+    execute 'source' ft_path
+  endif
+endfunction
+autocmd FileType * call FileTypeHandle()

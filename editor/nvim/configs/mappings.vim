@@ -4,13 +4,6 @@ let mapleader = " "
   " For Insert Mode
   imap jk <Esc>
 
-  inoremap (; <CR>(<CR>);<C-c>O
-  inoremap (, <CR>(<CR>)<C-c>O
-  inoremap {; <CR>{<CR>};<C-c>O
-  inoremap {, <CR>{<CR>}<C-c>O
-  inoremap [; <CR>[<CR>];<C-c>O
-  inoremap [, <CR>[<CR>]<C-c>O
-
   " For Terminal Mode
   tnoremap jk  <C-\><C-n> 
   tnoremap <Esc> <C-\><C-n>
@@ -22,20 +15,21 @@ let mapleader = " "
   " For Normal Mode
   nnoremap ; :
   nnoremap ,/ :noh<CR>
-    " Pane Movement
-    nnoremap <C-h> <C-w>h
-    nnoremap <C-j> <C-w>j
-    nnoremap <C-k> <C-w>k
-    nnoremap <C-l> <C-w>l
 
-    " Splits
-    nnoremap <M-v> :vsplit<CR>
-    nnoremap <M-h> :split<CR>
+  " Pane Movement
+  nnoremap <C-h> <C-w>h
+  nnoremap <C-j> <C-w>j
+  nnoremap <C-k> <C-w>k
+  nnoremap <C-l> <C-w>l
 
-    " Buffer Switching
-    nnoremap <leader>j :bn<CR>
-    nnoremap <leader>k :bp<CR>
-    nnoremap <leader>; :bd<CR>
+  " Splits
+  nnoremap <M-v> :vsplit<CR>
+  nnoremap <M-h> :split<CR>
+
+  " Buffer Switching
+  nnoremap <leader>j :bn<CR>
+  nnoremap <leader>k :bp<CR>
+  nnoremap <leader>; :bd<CR>
 
 " Functions (I guess)
 nnoremap <C-t> :split<CR>

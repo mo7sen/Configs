@@ -1,4 +1,4 @@
-execute 'source' '~/.config/nvim/configs/variables.vim'
+execute 'source' '~/.config/nvim/configs/vars.vim'
 
 call plug#begin('~/.config/nvim/plugs')
   for p in glob('~/.config/nvim/configs/plugs/**/*.vim', 0, 1)

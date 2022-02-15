@@ -1,0 +1,6 @@
+require "sisyphus.options"
+require "sisyphus.keymaps"
+require "sisyphus.plugins"
+require "sisyphus.colorscheme"
+require "sisyphus.completion"
+require "sisyphus.lsp"

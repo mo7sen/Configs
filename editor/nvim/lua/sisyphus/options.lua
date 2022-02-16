@@ -2,7 +2,7 @@ local opt = vim.opt
 
 opt.backup = false                                             -- Backup file creation
 opt.clipboard = "unnamedplus"                    -- Using system clipboard
-opt.cmdheight = 2
+opt.cmdheight = 1
 opt.completeopt = { "menuone", "noselect" }
 opt.conceallevel = 0
 opt.fileencoding = "utf-8"          -- File encoding
@@ -21,7 +21,7 @@ opt.termguicolors = true
 opt.timeoutlen = 1000                                  -- Time to wait for a mapped sequence to complete
 opt.undofile = true                                            -- Persistent undo history
 opt.updatetime = 300                                   -- Faster completion (ms)
-opt.writebackup = false                                -- 
+opt.writebackup = false                                --
 opt.expandtab = true                                   -- Convert tabs to spaces
 opt.shiftwidth = 2                                             -- Number of spaces per indentation
 opt.tabstop = 2                                                    -- Insert spaces per tab
@@ -33,7 +33,6 @@ opt.signcolumn = "yes"                         -- Always show sign column
 opt.wrap = false                                                 -- Text wrapping
 opt.scrolloff = 8
 opt.sidescrolloff = 8
-opt.guifont = "monospace:h17"                    -- Font in graphical vim
 opt.lazyredraw = true              -- Don't draw in the middle of bindings/macros
 
 opt.shortmess:append "c"

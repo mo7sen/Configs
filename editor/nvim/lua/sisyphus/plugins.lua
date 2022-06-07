@@ -140,6 +140,10 @@ return packer.startup(function(use)
   }
 
   use {
+    'MunifTanjim/nui.nvim'
+  }
+
+  use {
     "ray-x/lsp_signature.nvim"
   }
 

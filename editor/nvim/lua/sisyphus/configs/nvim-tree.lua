@@ -1,6 +1,5 @@
 return function()
   vim.cmd [[
-    let g:nvim_tree_disable_window_picker = 1
     let g:nvim_tree_show_icons = {
         \ 'git': 1,
         \ 'folders': 1,
@@ -30,14 +29,21 @@ return function()
         \   'symlink_open': "",
         \   }
         \ }
+    autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
   ]]
   require'nvim-tree'.setup {
     open_on_setup = true,
-    auto_close = true,
     git = {
       enable = true,
       ignore = false,
     },
+    actions = {
+      open_file = {
+        window_picker = {
+          enable = true
+        }
+      }
+    }
   }
   vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeToggle<cr>", { noremap = true, silent = true })
 end

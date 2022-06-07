@@ -2,6 +2,9 @@ vim.g.vscode_style = "dark"
 vim.g.vscode_italic_comment = 0 -- Recommended ( Unfortunately, causes clipping with neovim-qt and FiraCode )
 vim.g.vscode_transparent = false
 
+-- Options:
+--   - dracula
+--   - vscode
 local colorscheme = "vscode"
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)

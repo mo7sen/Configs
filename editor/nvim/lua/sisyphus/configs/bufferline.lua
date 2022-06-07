@@ -33,42 +33,34 @@ return function()
         guibg = {attribute = "bg", highlight = "StatusLine"}
       },
       buffer_visible = {
-        gui = "",
         guifg = {attribute = "fg", highlight="Normal"},
         guibg = {attribute = "bg", highlight = "Normal"}
       },
       buffer_selected = {
-        gui = "",
         guifg = {attribute = "fg", highlight="Normal"},
         guibg = {attribute = "bg", highlight = "Normal"}
       },
       separator = {
-        gui = "",
         guifg = {attribute = "bg", highlight = "Normal"},
         guibg = {attribute = "bg", highlight = "StatusLine"},
       },
       separator_selected = {
-        gui = "",
         guifg = {attribute = "fg", highlight="Special"},
         guibg = {attribute = "bg", highlight = "Normal"}
       },
       separator_visible = {
-        gui = "",
         guifg = {attribute = "fg", highlight = "Normal"},
         guibg = {attribute = "bg", highlight = "StatusLineNC"},
       },
       close_button = {
-        gui = "",
         guifg = {attribute = "fg", highlight = "Normal"},
         guibg = {attribute = "bg", highlight = "StatusLine"}
       },
       close_button_selected = {
-        gui = "",
         guifg = {attribute = "fg", highlight="normal"},
         guibg = {attribute = "bg", highlight = "normal"}
       },
       close_button_visible = {
-        gui = "",
         guifg = {attribute = "fg", highlight="normal"},
         guibg = {attribute = "bg", highlight = "normal"}
       },
